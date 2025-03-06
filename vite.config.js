@@ -3,5 +3,10 @@ import vue from '@vitejs/plugin-vue'
 
 export default defineConfig({
   plugins: [vue()],
-  base: '/HBLStudio.github.io/'
+  base: '/HBLStudio.github.io/',
+  build: {
+    rollupOptions: {
+      external: ['vue']
+    }
+  }
 })
