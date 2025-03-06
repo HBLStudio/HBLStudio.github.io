@@ -1,75 +1,48 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>永恒星辰 - 致[女生名字]</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-    <link rel="stylesheet" href="assets/styles.css">
+    <title>Three.js Demo</title>
+    <style>
+        body { margin: 0; }
+        canvas { display: block; }
+    </style>
 </head>
 <body>
-    <!-- 预加载层 -->
-    <div class="preloader animate__animated animate__fadeOut"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // 初始化场景
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer();
+        
+        // 创建渲染器
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
 
-    <!-- 花瓣容器 -->
-    <div id="petal-container"></div>
+        // 添加立方体
+        const geometry = new THREE.BoxGeometry();
+        const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+        const cube = new THREE.Mesh(geometry, material);
+        scene.add(cube);
 
-    <!-- 首屏内容 -->
-    <header class="main-header">
-        <h1 class="title animate__animated animate__fadeInDown">[女生名字]，你是我永恒的星辰</h1>
-        <h2 class="subtitle animate__animated animate__fadeInUp">愿以余生为期，伴你日月朝夕</h2>
-    </header>
+        camera.position.z = 5;
 
-    <!-- 情书信封 -->
-    <div class="envelope-container animate__animated animate__zoomIn">
-        <div class="envelope">
-            <div class="front">
-                <div class="heart-lock"></div>
-            </div>
-            <div class="back">
-                <div class="love-letter">
-                    <div class="letter-section" data-section="初见心动">
-                        <h4>初见的那一眼</h4>
-                        <p>...</p>
-                    </div>
-                    <div class="letter-section" data-section="相处点滴">
-                        <h4>365天的温暖</h4>
-                        <p>...</p>
-                    </div>
-                    <div class="letter-section" data-section="未来承诺">
-                        <h4>永恒的承诺</h4>
-                        <p>...</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+        // 动画循环
+        function animate() {
+            requestAnimationFrame(animate);
+            cube.rotation.x += 0.01;
+            cube.rotation.y += 0.01;
+            renderer.render(scene, camera);
+        }
 
-<!-- 照片时光轴 -->
-<section class="timeline">
-    <h3>珍藏我们的365个心动瞬间</h3>
-    <div class="timeline-track">
-        <div class="timeline-item" data-date="2023.03.14">
-            <img src="assets/images/1.jpg" alt="我们的第一天">
-        </div>
-        <!-- 重复4个timeline-item -->
-    </div>
-</section>
+        // 窗口缩放处理
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
 
-<!-- 心跳按钮 -->
-<div class="heart-btn-container">
-    <div class="heart-btn">
-        <div class="heart-pulse"></div>
-        <div class="heart-core"></div>
-    </div>
-</div>
-
-    <!-- 背景音乐 -->
-    <audio id="bgm" loop>
-        <source src="assets/music.mp3" type="audio/mpeg">
-    </audio>
-
-    <script src="assets/app.js"></script>
+        animate();
+    </script>
 </body>
 </html>
